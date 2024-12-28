@@ -9,11 +9,11 @@ public partial class ResultsPage : ContentPage
 
     public async void openGamePage(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Pages.GamePage());
+        await Navigation.PushModalAsync(new Pages.GamePage());
     }
 
     public async void openMainPage(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new MainPage());
+        await Navigation.PushModalAsync(new MainPage());
     }
 }
