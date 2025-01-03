@@ -62,6 +62,6 @@
             <Button Text="DELETE" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="9" Grid.ColumnSpan="2"/>
         </Grid>
 
-        <Button Text="Results Page" Clicked="openResultsPage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
+        <Button Text="Results Page" Clicked="OpenResultsPage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
     </VerticalStackLayout>
 </ContentPage>

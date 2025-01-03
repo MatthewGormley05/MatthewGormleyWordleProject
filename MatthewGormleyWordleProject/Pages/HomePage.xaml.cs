@@ -2,7 +2,9 @@ namespace MatthewGormleyWordleProject.Pages;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage()
+    //Initialise Pages Methods for future use
+    public PagesMethods pagesMethods = new PagesMethods();
+    public HomePage()
 	{
 		InitializeComponent();
 	}

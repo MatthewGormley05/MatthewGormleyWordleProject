@@ -2,13 +2,18 @@
 using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
+using MatthewGormleyWordleProject.Pages;
 
 namespace MatthewGormleyWordleProject
 {
     public partial class MainPage : ContentPage
     {
+        //Initialise Pages Methods for future use
+        public PagesMethods pagesMethods = new PagesMethods();
+
         public string FileUrl = "https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt";
         public string localPath = "test.txt";
+
         public MainPage()
         {
             InitializeComponent();
@@ -19,6 +24,7 @@ namespace MatthewGormleyWordleProject
             //Main Page is only opened once to make sure that the application doesn't crash when downloading
             Test.Text = "Not successful";
             //DownloadList();
+            PagesMethods pagesMethods = new PagesMethods();
             OpenHomePage();
         }
 
