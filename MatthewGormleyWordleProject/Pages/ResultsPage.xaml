@@ -8,6 +8,6 @@
     
     <VerticalStackLayout>
         <Label Text="This is the Results Page" VerticalOptions="Center" HorizontalOptions="Center" />
-        <Button Text="Main Page" Clicked="openMainPage"/>
+        <Button Text="Main Page" Clicked="openHomePage"/>
     </VerticalStackLayout>
 </ContentPage>

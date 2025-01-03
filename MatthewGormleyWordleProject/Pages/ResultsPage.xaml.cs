@@ -12,8 +12,8 @@ public partial class ResultsPage : ContentPage
         await Navigation.PushModalAsync(new Pages.GamePage());
     }
 
-    public async void openMainPage(object sender, EventArgs e)
+    public async void openHomePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new MainPage());
+        await Navigation.PushModalAsync(new Pages.HomePage());
     }
 }

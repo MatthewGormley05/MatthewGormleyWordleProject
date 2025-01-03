@@ -8,7 +8,7 @@ namespace MatthewGormleyWordleProject
     public partial class MainPage : ContentPage
     {
         public string FileUrl = "https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt";
-        public string localPath = "C:\\Users\\kelpi\\source\\repos\\MatthewGormleyWordleProject\\MatthewGormleyWordleProject";
+        public string localPath = "test.txt";
         public MainPage()
         {
             InitializeComponent();
@@ -16,18 +16,22 @@ namespace MatthewGormleyWordleProject
             NavigationPage.SetHasBackButton(this, false);
 
             //Checking or downloading list of words
-            //DownloadList(); //This is crashing the application //Randomly the loading will appear and then stop
-
+            //Main Page is only opened once to make sure that the application doesn't crash when downloading
+            Test.Text = "Not successful";
+            //DownloadList();
+            OpenHomePage();
         }
 
         public async void DownloadList()
         {
-            //Using File.Exists to check if it exists
+            //Change for Phone
+            //Create http client to interact with internet
+            HttpClient client = new HttpClient();
+
+            //Using File.Exists to check if the file exists
             if (!File.Exists(localPath))
             {
                 //Test: PlayButton.Text = "File does not exist";
-                //Create http client to interact with internet
-                HttpClient client = new HttpClient();
                 var response = await client.GetAsync("https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt");//Lab 9 content template
 
                 if (response.IsSuccessStatusCode)
@@ -38,18 +42,16 @@ namespace MatthewGormleyWordleProject
                 }
             }
 
+            else if(File.Exists(localPath))
+            {
+                Test.Text = "File Exists";
+            }
             //Read from the file and grab a word
         }
 
-
-        public async void OpenGamePage(object sender, EventArgs e)
+        public async void OpenHomePage()
         {
-            await Navigation.PushModalAsync(new Pages.GamePage());
-        }
-
-        public async void OpenResultsPage(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new Pages.ResultsPage());
+            await Navigation.PushModalAsync(new Pages.HomePage());
         }
     }
 

@@ -15,9 +15,9 @@ public partial class GamePage : ContentPage
         await Navigation.PushModalAsync(new Pages.ResultsPage());
     }
 
-    public async void openMainPage(object sender, EventArgs e)
+    public async void OpenHomePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new MainPage());
+        await Navigation.PushModalAsync(new Pages.HomePage());
     }
 
     public void makeGrid()

@@ -7,19 +7,7 @@
 
     <ScrollView>
         <VerticalStackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-            <Image Source="notwordle.png" HeightRequest="125" WidthRequest="125"/>
-            <Label Text="Wordle" FontSize="45" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Label Text="Get 6 chances to guess" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Label Text="a 5-Letter word." FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Grid Padding="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0" x:Name="PlayButton" Text="Play" Clicked="OpenGamePage" HeightRequest="20" WidthRequest="75" HorizontalOptions="End"/>
-                <Button Grid.Column="1" x:Name="ResultsButton" Text="Results" Clicked="OpenResultsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Start"/>
-            </Grid>
+            <Label x:Name="Test" Text="Main Page (not visible to user)" FontSize="45" HorizontalOptions="Center" VerticalOptions="Center"/>
         </VerticalStackLayout>
     </ScrollView>
 
