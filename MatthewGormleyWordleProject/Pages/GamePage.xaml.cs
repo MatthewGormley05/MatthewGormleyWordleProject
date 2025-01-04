@@ -1,3 +1,4 @@
+//using Android.Text;
 using Microsoft.Maui;
 
 namespace MatthewGormleyWordleProject.Pages;
@@ -5,10 +6,10 @@ namespace MatthewGormleyWordleProject.Pages;
 public partial class GamePage : ContentPage
 {
     //Variables
-    public int i = 0, j = 0, selectedBox = 0, currentRow = 0, roundNumber = 1;
+    public int i = 0, j = 0, selectedBox = 0, currentRow = 0, roundNumber = 1, inputType = 0;
     public string chosenWord = string.Empty, userWord = string.Empty;
-    public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
-    //public int resultsTracker[][] = { 0 }{ 0 };
+    public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
+    //public int attemptsGrid[][] = { 0 }{ 0 };
     public bool gameWon = false, resultChecked = false, validInput = false;
 
     //Initialise Pages Methods for future use
@@ -17,6 +18,14 @@ public partial class GamePage : ContentPage
     {
         InitializeComponent();
         MakeGrid();
+
+        //Choose Word from file
+
+        //Break down word into letters to be compared to user inputs based on selected box value
+        for(int i = 0; i < 6; i++)
+        {
+            
+        }
 
         //Start the game
 
@@ -38,6 +47,7 @@ public partial class GamePage : ContentPage
             while (resultChecked == false)
             {
                 //Reset the textbox
+                validInput = false;
 
                 //User Enters 1 letter that is auto-capitalised
 
@@ -45,7 +55,7 @@ public partial class GamePage : ContentPage
                 InputValidation();
 
                 //If its one of the letters, fill out the current input with it
-                if(i == 0)
+                if (validInput == true && inputType == 1)
                 {
                     //Set the current box input
 
@@ -54,7 +64,7 @@ public partial class GamePage : ContentPage
                 }
                 
                 //If its "enter" and all 5 boxes are filled, validate it
-                else if(i == 1)
+                else if(validInput == true && inputType == 2)
                 {
                     //For loop that goes through each of the boxes comparing the inputs to the chosen word
                     //If input is correct give it value of 1
@@ -72,14 +82,17 @@ public partial class GamePage : ContentPage
                 }
 
                 //If its "delete", reset previous box
-                else if(i == 2)
+                else if(validInput == true && inputType == 3)
                 {
                     //Clear Current Box
 
                     //Go back a box
 
                     //Clear that Box
-                }    
+                }
+
+                //Testing
+                resultChecked = true;
             }
 
             //Check if game was won at end of round, if so break the for loop

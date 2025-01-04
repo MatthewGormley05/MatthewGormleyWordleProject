@@ -9,5 +9,30 @@
     <VerticalStackLayout>
         <Label Text="This is the Results Page" VerticalOptions="Center" HorizontalOptions="Center" />
         <Button Text="Home Page" Clicked="OpenHomePage"/>
+
+		<Label Text="Player Name: Melissa"/>
+		<Label Text=""/>
+		
+		
+		<Label Text="Time: N/A"/>
+		<Label Text="Word: N/A"/>
+		<Label Text="Guesses: "/>
+		<Label Text="Time: N/A"/>
+		<Label Text="Emoji Grid:"/>
+		<Label Text=""/>
+
+		<Label Text="Time: N/A"/>
+		<Label Text="Word: N/A"/>
+		<Label Text="Guesses: "/>
+		<Label Text="Time: N/A"/>
+		<Label Text="Emoji Grid:"/>
+		<Label Text=""/>
+
+		<Label Text="Time: N/A"/>
+		<Label Text="Word: N/A"/>
+		<Label Text="Guesses: "/>
+		<Label Text="Time: N/A"/>
+		<Label Text="Emoji Grid:"/>
+		<Label Text=""/>
     </VerticalStackLayout>
 </ContentPage>
