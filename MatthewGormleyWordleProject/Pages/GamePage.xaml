@@ -7,6 +7,8 @@
              NavigationPage.HasNavigationBar="False">
 
     <VerticalStackLayout BackgroundColor="Black">
+		
+		
         <Grid x:Name="GameGrid" BackgroundColor="Black" 
               HorizontalOptions="Center" VerticalOptions="Center"
               RowSpacing="3" ColumnSpacing="3" Padding="40"

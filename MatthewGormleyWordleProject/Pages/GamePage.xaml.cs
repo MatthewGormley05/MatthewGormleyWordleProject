@@ -6,8 +6,8 @@ namespace MatthewGormleyWordleProject.Pages;
 public partial class GamePage : ContentPage
 {
     //Variables
-    public int i = 0, j = 0, selectedBox = 0, currentRow = 0, roundNumber = 1, inputType = 0;
-    public string chosenWord = string.Empty, userWord = string.Empty;
+    public int i = 0, j = 0, selectedBoxCounter = 0, selectedRow = 0, roundNumber = 1, inputType = 0;
+    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
     //public int attemptsGrid[][] = { 0 }{ 0 };
     public bool gameWon = false, resultChecked = false, validInput = false;
@@ -21,10 +21,10 @@ public partial class GamePage : ContentPage
 
         //Choose Word from file
 
-        //Break down word into letters to be compared to user inputs based on selected box value
-        for(int i = 0; i < 6; i++)
+        //Break down word into letters to be compared to user inputs
+        for(int i = 0; i < 5; i++)
         {
-            
+            wordLetters[i] = " ";
         }
 
         //Start the game
@@ -32,7 +32,7 @@ public partial class GamePage : ContentPage
         //Make Popup that explains the game
 
         //Ensure row is set to 0
-        currentRow = 0;
+        selectedRow = 0;
 
         //For loop that ends in a loss if completed
         for (i = 0; i < 6; i++)
@@ -41,7 +41,8 @@ public partial class GamePage : ContentPage
             resultChecked = false;
             gameWon = false;
             validInput = false;
-            selectedBox = 0;
+            selectedBoxCounter = 0;
+            currentInput = string.Empty;
 
             //While loop that runs until user uses the enter button
             while (resultChecked == false)
@@ -50,17 +51,27 @@ public partial class GamePage : ContentPage
                 validInput = false;
 
                 //User Enters 1 letter that is auto-capitalised
+                //input.TextChanged
 
-                //Validation check is done
+                //Validation check is done on text change
                 InputValidation();
 
                 //If its one of the letters, fill out the current input with it
                 if (validInput == true && inputType == 1)
                 {
-                    //Set the current box input
+                    //Set current input to the current box text
+                    //currentInput = currentTextBox.Text;
+
+                    //Set the store array value
+                    userInputs[selectedBoxCounter] = currentInput;
+
+                    //Clear input
+                    currentInput = string.Empty;
 
                     //Go to the next box
-                    selectedBox++;
+                    //selectedBox.unfocus();
+                    selectedBoxCounter++;
+                    //selectedBox.focus();
                 }
                 
                 //If its "enter" and all 5 boxes are filled, validate it
@@ -101,29 +112,43 @@ public partial class GamePage : ContentPage
                 break;
             }
 
-            currentRow++;
+            selectedRow++;
         }
     }
 
+    
     public void MakeGrid()
     {
+        
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < 6; j++)
             {
-                //Create the rows and columns of buttons
-                Button button = new Button()
+                //Create the rows and columns of entries
+                Entry entry = new Entry()
                 {
                     BackgroundColor = Colors.Black,
-                    BorderColor = Colors.LightGrey,
-                    BorderWidth = 2,
-                    HeightRequest = 40,
-                    WidthRequest = 40
+                    HeightRequest = 38,
+                    WidthRequest = 38
                 };
 
-                GameGrid.Add(button, i, j);
+                GameGrid.Add(entry, i, j);
+
+                //Create frames around the entries
+                Frame frame = new Frame
+                {
+                    BorderColor = Colors.LightGray,
+                    BackgroundColor = Colors.Black,
+                    Padding = 0,
+                    HeightRequest = 40,
+                    WidthRequest = 40,
+                    CornerRadius = 3
+                };
+
+                GameGrid.Add(frame, i, j);
             }
         }
+        
     }
 
     public void InputValidation()
