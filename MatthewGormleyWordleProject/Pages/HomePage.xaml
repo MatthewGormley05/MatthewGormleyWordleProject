@@ -15,10 +15,12 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 
-				<Button Grid.Column="0" x:Name="PlayButton" Text="Play" Clicked="OpenGamePage" HeightRequest="20" WidthRequest="75" HorizontalOptions="End"/>
-				<Button Grid.Column="1" x:Name="ResultsButton" Text="Results" Clicked="OpenResultsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Start"/>
+				<Button Grid.Column="0" x:Name="Settings" Text="Settings" Clicked="OpenSettingsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="End"/>
+				<Button Grid.Column="1" x:Name="PlayButton" Text="Play" Clicked="OpenGamePage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Center"/>
+				<Button Grid.Column="2" x:Name="ResultsButton" Text="Results" Clicked="OpenResultsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Start"/>
 			</Grid>
 		</VerticalStackLayout>
 	</ScrollView>

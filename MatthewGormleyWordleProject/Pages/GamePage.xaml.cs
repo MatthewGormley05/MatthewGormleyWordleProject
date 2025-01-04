@@ -19,6 +19,7 @@ public partial class GamePage : ContentPage
         InitializeComponent();
         MakeGrid();
 
+
         //Choose Word from file
 
         //Break down word into letters to be compared to user inputs
@@ -154,10 +155,16 @@ public partial class GamePage : ContentPage
     public void InputValidation()
     {
         //Check the textbox to see if it is valid
+        if(i == 0)
+        {
 
-        //If valid set to true
+        }
 
         //If invalid set to false
+        else
+        {
+            validInput = false;
+        }
     }
 
     public async void OpenResultsPage(object sender, EventArgs e)
