@@ -5,15 +5,13 @@
              Title="GamePage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
-
+	
     <VerticalStackLayout BackgroundColor="Black">
-		
-		
-        <Grid x:Name="GameGrid" BackgroundColor="Black" 
+		<Grid x:Name="GameGrid" BackgroundColor="Black"
               HorizontalOptions="Center" VerticalOptions="Center"
               RowSpacing="3" ColumnSpacing="3" Padding="40"
               ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*,*">
-        </Grid>
+		</Grid>
 
         <Grid x:Name="Keyboard1" BackgroundColor="Black"
               HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
@@ -64,7 +62,7 @@
             <Button Text="DELETE" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="9" Grid.ColumnSpan="2"/>
         </Grid>
 
-		<Entry x:Name="userInput"/>
+		<Entry x:Name="userInput" BackgroundColor="Gray" TextChanged="OnTextChanged"/>
 
         <Button Text="Results Page" Clicked="OpenResultsPage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
     </VerticalStackLayout>
