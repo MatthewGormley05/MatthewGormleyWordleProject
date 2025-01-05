@@ -13,56 +13,7 @@
               ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*,*">
 		</Grid>
 
-        <Grid x:Name="Keyboard1" BackgroundColor="Black"
-              HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-              ColumnSpacing="5" Padding="3"
-              ColumnDefinitions="*,*,*,*,*,*,*,*,*,*" RowDefinitions="*">
-
-            <Button Text="Q" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="0"/>
-            <Button Text="W" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="1"/>
-            <Button Text="E" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="2"/>
-            <Button Text="R" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="3"/>
-            <Button Text="T" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="4"/>
-            <Button Text="Y" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="5"/>
-            <Button Text="U" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="6"/>
-            <Button Text="I" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="7"/>
-            <Button Text="O" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="8"/>
-            <Button Text="P" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="9"/>
-        </Grid>
-
-        <Grid x:Name="Keyboard2" BackgroundColor="Black"
-              HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-              ColumnSpacing="5" Padding="2"
-              ColumnDefinitions="*,*,*,*,*,*,*,*,*" RowDefinitions="*">
-
-            <Button Text="A" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="0"/>
-            <Button Text="S" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="1"/>
-            <Button Text="D" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="2"/>
-            <Button Text="F" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="3"/>
-            <Button Text="G" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="4"/>
-            <Button Text="H" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="5"/>
-            <Button Text="J" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="6"/>
-            <Button Text="K" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="7"/>
-            <Button Text="L" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="8"/>
-        </Grid>
-
-        <Grid x:Name="Keyboard3" BackgroundColor="Black"
-              HorizontalOptions="Center" VerticalOptions="Center"
-              ColumnSpacing="5" Padding="3"
-              ColumnDefinitions="*,*,*,*,*,*,*,*,*,*,*" RowDefinitions="*">
-
-            <Button Text="ENTER" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <Button Text="Z" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="2"/>
-            <Button Text="X" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="3"/>
-            <Button Text="C" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="4"/>
-            <Button Text="V" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="5"/>
-            <Button Text="B" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="6"/>
-            <Button Text="N" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="7"/>
-            <Button Text="M" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="8"/>
-            <Button Text="DELETE" HeightRequest="5" BackgroundColor="Grey" TextColor="White" Grid.Column="9" Grid.ColumnSpan="2"/>
-        </Grid>
-
-		<Entry x:Name="userInput" BackgroundColor="Gray" TextChanged="OnTextChanged"/>
+		<Entry x:Name="userInput" Placeholder="Type Entry Here: " BackgroundColor="Gray" TextChanged="OnTextChanged" Completed="CheckResult" HeightRequest="25" WidthRequest="200"/>
 
         <Button Text="Results Page" Clicked="OpenResultsPage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
     </VerticalStackLayout>

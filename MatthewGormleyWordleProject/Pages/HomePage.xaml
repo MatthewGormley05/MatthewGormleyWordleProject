@@ -18,9 +18,17 @@
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 
-				<Button Grid.Column="0" x:Name="Settings" Text="Settings" Clicked="OpenSettingsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="End"/>
-				<Button Grid.Column="1" x:Name="PlayButton" Text="Play" Clicked="OpenGamePage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Center"/>
-				<Button Grid.Column="2" x:Name="ResultsButton" Text="Results" Clicked="OpenResultsPage" HeightRequest="20" WidthRequest="75" HorizontalOptions="Start"/>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Button Grid.Column="0" Grid.Row ="0" x:Name="Settings" Text="Settings" Clicked="OpenSettingsPage" HeightRequest="20" WidthRequest="100" HorizontalOptions="End"/>
+				<Button Grid.Column="1" Grid.Row ="0" x:Name="PlayButton" Text="Play" Clicked="OpenGamePage" HeightRequest="20" WidthRequest="100" HorizontalOptions="Center"/>
+				<Button Grid.Column="2" Grid.Row ="0" x:Name="ResultsButton" Text="History" Clicked="OpenResultsPage" HeightRequest="20" WidthRequest="100" HorizontalOptions="Start"/>
+				<Button Grid.Column="1" Grid.Row ="1" BackgroundColor ="White"/>
+				<Button Grid.Column="1" Grid.Row ="2" x:Name="ChangeUserButton" Text="Change User" Clicked="OpenLogInPage" HeightRequest="20" WidthRequest="125" HorizontalOptions="Center" VerticalOptions="End"/>
 			</Grid>
 		</VerticalStackLayout>
 	</ScrollView>

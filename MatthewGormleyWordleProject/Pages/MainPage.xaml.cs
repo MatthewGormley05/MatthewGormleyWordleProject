@@ -25,7 +25,7 @@ namespace MatthewGormleyWordleProject
             Test.Text = "Not successful";
             //DownloadList();
             PagesMethods pagesMethods = new PagesMethods();
-            OpenHomePage();
+            OpenLogInPage();
         }
 
         public async void DownloadList()
@@ -55,9 +55,9 @@ namespace MatthewGormleyWordleProject
             //Read from the file and grab a word
         }
 
-        public async void OpenHomePage()
+        public async void OpenLogInPage()
         {
-            await Navigation.PushModalAsync(new Pages.HomePage());
+            await Navigation.PushModalAsync(new Pages.LogInPage());
         }
     }
 

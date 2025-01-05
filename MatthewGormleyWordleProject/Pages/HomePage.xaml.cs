@@ -23,4 +23,9 @@ public partial class HomePage : ContentPage
     {
         await Navigation.PushModalAsync(new Pages.ResultsPage());
     }
+
+    public async void OpenLogInPage(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new Pages.LogInPage());
+    }
 }

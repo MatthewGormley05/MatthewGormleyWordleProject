@@ -1,5 +1,6 @@
 //using Android.Text;
 //using Java.Lang;
+//using GameKit;
 using Microsoft.Maui;
 
 namespace MatthewGormleyWordleProject.Pages;
@@ -8,10 +9,11 @@ public partial class GamePage : ContentPage
 {
     //Variables
     public int i = 0, j = 0, k = 0, selectedBoxCounter = 0, selectedRow = 0, roundNumber = 1, inputType = 0;
-    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty;
+    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, playerName = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
     //public int attemptsGrid[][] = { 0 }{ 0 };
     public bool gameWon = false, resultChecked = false, validInput = false;
+    public string[] Letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
     //Initialise Pages Methods for future use
     public PagesMethods pagesMethods = new PagesMethods();
@@ -20,17 +22,20 @@ public partial class GamePage : ContentPage
         InitializeComponent();
         MakeGrid();
         GameStarted();
-        gameResult();
     }
 
     public async void GameStarted()
     {
         //Choose Word from file
+        //Set random number
+        //Go to that line in the file
+        //Take that word and set it to chosen word
+        chosenWord = "FISHY";
 
         //Break down word into letters to be compared to user inputs
         for (int i = 0; i < 5; i++)
         {
-            wordLetters[i] = " ";
+            wordLetters[i] = chosenWord.Substring(i);
         }
 
         //Popup that explains the game
@@ -68,6 +73,9 @@ public partial class GamePage : ContentPage
             //Move to next row
             selectedRow++;
         }
+
+        //Check the game result
+        GameResult();
     }
 
     public void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -98,8 +106,28 @@ public partial class GamePage : ContentPage
             //selectedBox.focus();
         }
 
-        //If its "enter" and all 5 boxes are filled, validate it
-        else if (validInput == true && inputType == 2)
+        //If its "delete", reset previous box
+        else if (validInput == true && inputType == 3)
+        {
+            //Clear Current Box
+
+            //Go back a box
+
+            //Clear that Box
+        }
+
+        //Testing
+        //resultChecked = true;
+
+        //Reset the textbox
+        validInput = false;
+        userInput.Text = string.Empty;
+    }
+
+    public void CheckResult(object sender, EventArgs e)
+    {
+        //Check to see if all 5 boxes are fillout out
+        if (userInputs[0] != string.Empty && userInputs[1] != string.Empty && userInputs[2] != string.Empty && userInputs[3] != string.Empty && userInputs[4] != string.Empty)
         {
             //For loop that goes through each of the boxes comparing the inputs to the chosen word
             for (j = 0; j < 5; j++)
@@ -107,7 +135,7 @@ public partial class GamePage : ContentPage
                 //If input is correct give it value of 1 and make it green
                 if (userInputs[j] == wordLetters[j])
                 {
-                    
+
                 }
 
                 //If input is correct but in wrong place give it value of 2 and make it yellow
@@ -137,23 +165,11 @@ public partial class GamePage : ContentPage
             }
         }
 
-        //If its "delete", reset previous box
-        else if (validInput == true && inputType == 3)
+        else
         {
-            //Clear Current Box
-
-            //Go back a box
-
-            //Clear that Box
+            userInput.Text = string.Empty;
         }
-
-        //Testing
-        //resultChecked = true;
-
-        //Reset the textbox
-        validInput = false;
-        userInput.Text = string.Empty;
-    }
+    }//End of Check Result
     
     public void MakeGrid()
     {
@@ -191,22 +207,20 @@ public partial class GamePage : ContentPage
 
     public void InputValidation()
     {
+        inputType = 0;
         //Check to see if the entry is a letter
-        if(i == 0)
-        {
-            inputType = 0;
-            validInput = true;
-        }
 
-        //Check to see if the entry is Enter
-        else if(i == 1)
+        for(int j = 0; j < Letters.Length; j++)
         {
-            inputType = 1;
-            validInput = true;
+            if(userInput.Text == Letters[i])
+            {
+                inputType = 1;
+                validInput = true;
+            }
         }
 
         //Check to see if the entry is Delete
-        else if(i == 2)
+        if(j == 15)
         {
             inputType = 3;
             validInput = true;
@@ -215,21 +229,33 @@ public partial class GamePage : ContentPage
         //If invalid set to false
         else
         {
+            inputType = 0;
             validInput = false;
         }
     }
 
-    public async void gameResult()
+    public async void GameResult()
     {
-        if(gameWon == true)
+        if(gameWon == true) //Victory
         {
 
         }
 
-        else if(gameWon == false)
+        else if(gameWon == false) //Loss
         {
 
         }
+
+        //Display Game Results
+
+        //Save Results to TxT File
+        SaveGame();
+    }
+
+    public void SaveGame()
+    {
+        //Testing Player Name
+        playerName = "Melissa";
     }
 
     public async void OpenResultsPage(object sender, EventArgs e)

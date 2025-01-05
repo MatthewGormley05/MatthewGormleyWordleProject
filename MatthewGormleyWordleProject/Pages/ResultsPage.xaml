@@ -12,27 +12,16 @@
 
 		<Label Text="Player Name: Melissa"/>
 		<Label Text=""/>
-		
-		
+
+		<Label Text="Game Result: Victory"/>
 		<Label Text="Time: N/A"/>
 		<Label Text="Word: N/A"/>
 		<Label Text="Guesses: "/>
-		<Label Text="Time: N/A"/>
 		<Label Text="Emoji Grid:"/>
 		<Label Text=""/>
 
-		<Label Text="Time: N/A"/>
-		<Label Text="Word: N/A"/>
-		<Label Text="Guesses: "/>
-		<Label Text="Time: N/A"/>
-		<Label Text="Emoji Grid:"/>
-		<Label Text=""/>
-
-		<Label Text="Time: N/A"/>
-		<Label Text="Word: N/A"/>
-		<Label Text="Guesses: "/>
-		<Label Text="Time: N/A"/>
-		<Label Text="Emoji Grid:"/>
-		<Label Text=""/>
+		<Grid x:Name="PlayerHistoryGrid" >
+			
+		</Grid>
     </VerticalStackLayout>
 </ContentPage>
