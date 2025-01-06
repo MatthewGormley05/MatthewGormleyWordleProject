@@ -2,13 +2,27 @@ namespace MatthewGormleyWordleProject.Pages;
 
 public partial class LogInPage : ContentPage
 {
-	public LogInPage()
+    //Player Name
+    public string PlayerName;
+
+    public LogInPage()
 	{
         InitializeComponent();
+        BindingContext = this;
 	}
 
     public async void OpenHomePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Pages.HomePage());
+        //User Name has to be set
+        if(!string.IsNullOrWhiteSpace(PlayerName))
+        {
+            await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
+        }
+
+        //Make user enter name
+        else
+        {
+            await DisplayAlert("Error", "Please enter a player name.", "OK");
+        }
     }
 }

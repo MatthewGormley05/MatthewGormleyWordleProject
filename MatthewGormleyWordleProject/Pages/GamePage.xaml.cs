@@ -9,17 +9,23 @@ public partial class GamePage : ContentPage
 {
     //Variables
     public int i = 0, j = 0, k = 0, selectedBoxCounter = 0, selectedRow = 0, roundNumber = 1, inputType = 0;
-    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, playerName = string.Empty;
+    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
-    //public int attemptsGrid[][] = { 0 }{ 0 };
+    public int[,] attemptsGrid = { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
     public bool gameWon = false, resultChecked = false, validInput = false;
     public string[] Letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    public double Time = 0;
+
+    //Player Name
+    public string PlayerName = string.Empty;
 
     //Initialise Pages Methods for future use
     public PagesMethods pagesMethods = new PagesMethods();
-    public GamePage()
+    public GamePage(string playerName)
     {
         InitializeComponent();
+        PlayerName = playerName;
+        BindingContext = this;
         MakeGrid();
         GameStarted();
     }
@@ -40,6 +46,7 @@ public partial class GamePage : ContentPage
 
         //Popup that explains the game
 
+
         //Ensure row is set to 0
         selectedRow = 0;
 
@@ -58,7 +65,10 @@ public partial class GamePage : ContentPage
             while (resultChecked == false)
             {
                 //Continously pause the for loop until the user hits the enter button
-                await Task.Delay(50);
+                await Task.Delay(10);
+
+                //Timer based on Task.Delay loop
+                Time += 0.1;
 
                 //Testing
                 resultChecked = true;
@@ -81,7 +91,7 @@ public partial class GamePage : ContentPage
     public void OnTextChanged(object sender, TextChangedEventArgs e)
     {
         //User Enters 1 letter that is auto-capitalised
-        userInput.Text = userInput.Text;
+        userInput.Text = userInput.Text.ToUpper();
 
 
         //Validation check is done on text change
@@ -255,16 +265,16 @@ public partial class GamePage : ContentPage
     public void SaveGame()
     {
         //Testing Player Name
-        playerName = "Melissa";
+        PlayerName = "Melissa";
     }
 
     public async void OpenResultsPage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Pages.ResultsPage());
+        await Navigation.PushModalAsync(new Pages.ResultsPage(PlayerName));
     }
 
     public async void OpenHomePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Pages.HomePage());
+        await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
     }
 }

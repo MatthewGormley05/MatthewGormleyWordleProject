@@ -10,7 +10,7 @@
         <Label Text="This is the Results Page" VerticalOptions="Center" HorizontalOptions="Center" />
         <Button Text="Home Page" Clicked="OpenHomePage"/>
 
-		<Label Text="Player Name: Melissa"/>
+		<Label x:Name ="DisplayName" Text="{Binding PlayerName}"/>
 		<Label Text=""/>
 
 		<Label Text="Game Result: Victory"/>

@@ -10,13 +10,21 @@ public partial class ResultsPage : ContentPage
     double Time = 0;
     //make 2d array for emojis
 
+    //Player Name
+    public string PlayerName = string.Empty;
 
-    public ResultsPage()
+
+    public ResultsPage(string playerName)
 	{
-		InitializeComponent();
+        InitializeComponent();
+        PlayerName = playerName;
+        BindingContext = this;
+
         //Print Player Name
-        LoadPlayerHistory();
-	}
+
+        //Print Previous Attempts
+        //LoadPlayerHistory();
+    }
 
     public void LoadPlayerHistory()
     {
@@ -67,11 +75,11 @@ public partial class ResultsPage : ContentPage
 
     public async void OpenGamePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Pages.GamePage());
+        await Navigation.PushModalAsync(new Pages.GamePage(PlayerName));
     }
 
     public async void OpenHomePage(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Pages.HomePage());
+        await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
     }
 }
