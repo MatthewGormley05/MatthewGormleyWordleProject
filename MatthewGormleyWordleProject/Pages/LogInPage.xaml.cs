@@ -14,7 +14,7 @@ public partial class LogInPage : ContentPage
     public async void OpenHomePage(object sender, EventArgs e)
     {
         //User Name has to be set
-        if(!string.IsNullOrWhiteSpace(PlayerName))
+        if(PlayerName != null)
         {
             await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
         }
@@ -22,8 +22,14 @@ public partial class LogInPage : ContentPage
         //Make user enter name
         else
         {
-            await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
-            //await DisplayAlert("Error", "Please enter a player name.", "OK");
+            //await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
+            await DisplayAlert("Error", "Please enter a player name.", "OK");
         }
+        
+    }
+
+    public void OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        PlayerName = LoginBox.Text;
     }
 }

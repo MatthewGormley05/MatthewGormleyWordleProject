@@ -5,9 +5,9 @@ public partial class ResultsPage : ContentPage
     //Initialise Pages Methods for future use
     public PagesMethods pagesMethods = new PagesMethods();
     public int i = 1, Guesses = 0;
-    public string Name = string.Empty, ChosenWord = string.Empty;
-    bool gameVictory = false;
-    double Time = 0;
+    public string Name = string.Empty, ChosenWord = string.Empty, fileName = string.Empty;
+    public bool gameVictory = false;
+    public double Time = 0;
     //make 2d array for emojis
 
     //Player Name
@@ -22,34 +22,45 @@ public partial class ResultsPage : ContentPage
 
         //Print Player Name
 
-        //Print Previous Attempts
+
         //LoadPlayerHistory();
     }
 
     public void LoadPlayerHistory()
     {
-        //Open file associated with player name
+        //Reference file associated with player name
+        fileName = PlayerName + ".txt";
+
+        //Formatted as:
+        //Game Word
+        //Game Result
+        //Guesses
+        //Timer
+        //Array
 
         //Load Attempt History
-        while(i == 0) //While loop that runs until file end starting on the 3rd Line
+        while (i == 0) //While loop that runs until file end
         {
+            //Start of loaded attempt
+
             //Reset Values
             Guesses = 0;
             ChosenWord = string.Empty;
             gameVictory = false;
             Time = 0;
 
-            //Each Attempt is 10 lines
+
+            //Each Attempt is 10 lines, create a new grid row and entry for each attempt
             for(i = 0; i < 10; i++)
             {
-                //If it's an empty line automatically stop (failsafe)
-                if(i == 100)
+                //If it's an empty line automatically skip 
+                if (i == 100)
                 {
 
                     break;
                 }
                 
-                //Set and print
+                //If not empty make place save game data
                 else
                 {
                     //Chosen word
@@ -61,16 +72,16 @@ public partial class ResultsPage : ContentPage
 
                     //Game Result
 
-                    //Time (if it = "!" then don't print)
-
                     //Guesses
+
+                    //Time (if it = "!" then don't print)
 
                     //Emoji Array
                 }
             }
         }
 
-        //Close File
+        //End of loaded attempt
     }
 
     public async void OpenGamePage(object sender, EventArgs e)

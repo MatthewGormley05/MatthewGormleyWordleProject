@@ -9,15 +9,16 @@ public partial class GamePage : ContentPage
 {
     //Variables
     public int i = 0, j = 0, k = 0, selectedColumn = 0, selectedRow = 0, roundNumber = 1, inputType = 0, randomLineNumber = 0, Guesses;
-    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, saveFileName = string.Empty;
+    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, saveFileName = string.Empty, saveFileData = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
     public int[,] attemptsGrid = { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
     public bool gameWon = false, resultChecked = false, validInput = false;
     public string[] Letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     public double Time = 0;
+    public string saveGameResult, saveGameGuesses, saveGameTime, saveArray;
 
     //Player Name
-    public string PlayerName = string.Empty;
+    public string PlayerName;
 
     //Initialise Pages Methods for future use
     public PagesMethods pagesMethods = new PagesMethods();
@@ -28,7 +29,10 @@ public partial class GamePage : ContentPage
         BindingContext = this;
         //MakeGrid();
         //GameStarted();
-        SaveGame();
+
+        //Testing
+        //SaveGame();
+        //RandomWord();
     }
 
     public async void GameStarted()
@@ -93,8 +97,12 @@ public partial class GamePage : ContentPage
     {
         Random random = new Random();
 
+        //Pathing
+        string path = FileSystem.Current.AppDataDirectory;
+        string fullPath = Path.Combine(path, "WordleWords.txt");
+
         //Check for file
-        if(File.Exists("WordleWords.txt") == false)
+        if (File.Exists(fullPath) == false)
         {
             DisplayAlert("Error", "File not found", "OK");
         }
@@ -102,13 +110,16 @@ public partial class GamePage : ContentPage
         else
         {
             //Read in file as array value
-            string[] lines = File.ReadAllLines("WordleWords.txt");
+            string[] lines = File.ReadAllLines(fullPath);
 
             //Choose Random Number
             randomLineNumber = random.Next(1, 3001);
 
             //Set string to the word on that random line
             chosenWord = lines[randomLineNumber - 1];
+
+            //Testing Word
+            //DisplayAlert("Success", chosenWord, "OK");
         }
     }
     
@@ -408,7 +419,7 @@ public partial class GamePage : ContentPage
 
         }
 
-        //Display Game Results
+        //Display Game Results with pop ups
 
         //Save Results to TxT File
         SaveGame();
@@ -422,6 +433,7 @@ public partial class GamePage : ContentPage
         gameWon = true;
         Time = 59;
         Guesses = 5;
+        saveFileData = "test";
 
         Random random = new Random();
         int randomResult;
@@ -438,8 +450,85 @@ public partial class GamePage : ContentPage
         }
         //End of testing
 
-        //Set filename (update later to route to player folder)
-        saveFileName = PlayerName + ".txt";
+        //Pathing
+        string playerFile = PlayerName + ".txt";
+        string path = FileSystem.Current.AppDataDirectory;
+        string fullPath = Path.Combine(path, playerFile);
+
+        //Formatted as:
+        //Game Word
+        //Game Result
+        //Guesses
+        //Timer
+        //Array
+
+        saveFileData = "\n"; //Start new entry with new line
+
+        //Game word
+        saveFileData += "\n";
+        saveFileData += chosenWord;
+
+        //Win or loss
+        saveFileData += "\n";
+        if (gameWon == true)
+        {
+            saveGameResult = "1"; //1 is win
+            saveFileData += saveGameResult;
+        }
+        else
+        {
+            saveGameResult = "0"; //0 is loss
+            saveFileData += saveGameResult;
+        }
+
+        //Guesses
+        saveFileData += "\n";
+        saveGameGuesses = Guesses.ToString();
+        saveFileData += saveGameGuesses;
+
+        //Time
+        saveFileData += "\n";
+        saveGameTime = Time.ToString();
+        saveFileData += saveGameTime;
+
+
+        //Array
+        for (i = 0; i < 6; i++)
+        {
+            //New Row
+            saveFileData += "\n";
+            for (j = 0; j < 5; j++)
+            {
+                //Win
+                if(attemptsGrid[i, j] == 1)
+                {
+                    saveArray = "1";
+                }
+
+                //Half Win
+                else if(attemptsGrid[i, j] == 2)
+                {
+                    saveArray = "2";
+                }
+
+                //Loss
+                else if(attemptsGrid[i, j] == 0)
+                {
+                    saveArray = "0";
+                }
+
+                saveFileData += saveArray;
+            }
+        }
+        //End of entry
+        saveFileData += "\n";
+        saveFileData += "\n";
+
+        //Testing saveFileData
+        DisplayAlert("Save Info", saveFileData, "CLOSE");
+
+        //Save to file
+        File.WriteAllText(fullPath, saveFileData); //Causing Crashes
     }
 
     public async void OpenResultsPage(object sender, EventArgs e)

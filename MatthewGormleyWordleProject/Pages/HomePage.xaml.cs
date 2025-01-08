@@ -13,7 +13,22 @@ public partial class HomePage : ContentPage
 		InitializeComponent();
         PlayerName = playerName;
         BindingContext = this;
+        CheckUser();
 	}
+
+    public void CheckUser()
+    {
+        string playerFile = PlayerName + ".txt";
+        string path = FileSystem.Current.AppDataDirectory;
+        string fullPath = Path.Combine(path, playerFile);
+
+        if(!File.Exists(fullPath))
+        {
+            //Create Player File if it does not exist
+            File.Create(fullPath);
+            
+        }
+    }
 
     public async void OpenGamePage(object sender, EventArgs e)
     {
