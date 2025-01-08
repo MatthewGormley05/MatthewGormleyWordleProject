@@ -22,7 +22,8 @@ public partial class LogInPage : ContentPage
         //Make user enter name
         else
         {
-            await DisplayAlert("Error", "Please enter a player name.", "OK");
+            await Navigation.PushModalAsync(new Pages.HomePage(PlayerName));
+            //await DisplayAlert("Error", "Please enter a player name.", "OK");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MatthewGormleyWordleProject.Pages;
 public partial class GamePage : ContentPage
 {
     //Variables
-    public int i = 0, j = 0, k = 0, selectedBoxCounter = 0, selectedRow = 0, roundNumber = 1, inputType = 0;
+    public int i = 0, j = 0, k = 0, selectedBoxCounter = 0, selectedRow = 0, roundNumber = 1, inputType = 0, randomLineNumber = 0;
     public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
     public int[,] attemptsGrid = { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
@@ -32,11 +32,10 @@ public partial class GamePage : ContentPage
 
     public async void GameStarted()
     {
-        //Choose Word from file
-        //Set random number
-        //Go to that line in the file
-        //Take that word and set it to chosen word
         chosenWord = "FISHY";
+
+        //Choose random word
+        RandomWord();
 
         //Break down word into letters to be compared to user inputs
         for (int i = 0; i < 5; i++)
@@ -88,6 +87,29 @@ public partial class GamePage : ContentPage
         GameResult();
     }
 
+    public void RandomWord()
+    {
+        Random random = new Random();
+
+        //Check for file
+        if(File.Exists("WordleWords.txt") == false)
+        {
+            DisplayAlert("Error", "File not found", "OK");
+        }
+
+        else
+        {
+            //Read in file as array value
+            string[] lines = File.ReadAllLines("WordleWords.txt");
+
+            //Choose Random Number
+            randomLineNumber = random.Next(1, 3001);
+
+            //Set string to the word on that random line
+            chosenWord = lines[randomLineNumber - 1];
+        }
+    }
+    
     public void OnTextChanged(object sender, TextChangedEventArgs e)
     {
         //User Enters 1 letter that is auto-capitalised
