@@ -9,10 +9,10 @@ public partial class GamePage : ContentPage
 {
     //Variables
     public int i = 0, j = 0, k = 0, selectedColumn = 0, selectedRow = 0, roundNumber = 1, inputType = 0, randomLineNumber = 0, Guesses;
-    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, saveFileName = string.Empty, saveFileData = string.Empty;
+    public string chosenWord = string.Empty, userWord = string.Empty, currentInput = string.Empty, saveFileName = string.Empty, saveFileData = string.Empty, validationInput = string.Empty;
     public string[] userInputs = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty }, wordLetters = { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
     public int[,] attemptsGrid = { { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } };
-    public bool gameWon = false, resultChecked = false, validInput = false;
+    public bool gameWon = false, resultChecked = false, validInput = false, processingTextChange = false;
     public string[] Letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     public double Time = 0;
     public string saveGameResult, saveGameGuesses, saveGameTime, saveArray;
@@ -27,30 +27,25 @@ public partial class GamePage : ContentPage
         InitializeComponent();
         PlayerName = playerName;
         BindingContext = this;
-        //MakeGrid();
-        //GameStarted();
-
-        //Testing
-        //SaveGame();
-        //RandomWord();
-    }
-
-    public async void GameStarted()
-    {
-        //Backup random word
-        chosenWord = "FISHY";
-
-        //Choose random word
+        MakeGrid();
         RandomWord();
 
         //Break down word into letters to be compared to user inputs
         for (int i = 0; i < 5; i++)
         {
-            wordLetters[i] = chosenWord.Substring(i);
+            wordLetters[i] = chosenWord.Substring(i, 1);
         }
 
-        //Popup that explains the game
+        GameStarted();
 
+        //Testing
+        //SaveGame();
+    }
+
+    public async void GameStarted()
+    {
+        //Popup that explains the game
+        StartAlert();
 
         //Ensure row is set to 0
         selectedRow = 0;
@@ -72,9 +67,6 @@ public partial class GamePage : ContentPage
                 //Continously pause the for loop until the user hits the enter button
                 await Task.Delay(10);
 
-                //Timer based on Task.Delay loop
-                Time += 0.1;
-
                 //Testing
                 //resultChecked = true;
             }
@@ -86,7 +78,10 @@ public partial class GamePage : ContentPage
             }
 
             //Move to next row
-            selectedRow++;
+            if(selectedRow < 5)
+            {
+                selectedRow++;
+            }
         }
 
         //Check the game result
@@ -117,100 +112,58 @@ public partial class GamePage : ContentPage
 
             //Set string to the word on that random line
             chosenWord = lines[randomLineNumber - 1];
+            chosenWord = chosenWord.ToUpper();
 
             //Testing Word
-            //DisplayAlert("Success", chosenWord, "OK");
+            //WordTest.Text = chosenWord;
         }
     }
+    
     
     public void OnTextChanged(object sender, TextChangedEventArgs e)
     {
         //Validation check is done on text change
         InputValidation();
-
+        
         //If its one of the letters, fill out the current input with it
-        if (validInput == true && inputType == 1)
+        if (validInput == true)
         {
             //Set current input
-            currentInput = userInput.Text;
+            currentInput = validationInput;
+            validationInput = string.Empty;
 
             //Change box text by making new box
-            Entry entry = new Entry()
+            Label label = new Label()
             {
-                BackgroundColor = Colors.Black,
-                HeightRequest = 38,
-                WidthRequest = 38,
-                IsReadOnly = true,
-                Text = currentInput
+                Text = currentInput,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                FontSize = 20,
+                TextColor = Colors.White
+                //Change Font Family
             };
-
-            GameGrid.Add(entry, selectedColumn, selectedRow);
-
-            Frame frame = new Frame
-            {
-                BorderColor = Colors.LightGray,
-                BackgroundColor = Colors.Black,
-                Padding = 0,
-                HeightRequest = 40,
-                WidthRequest = 40,
-                CornerRadius = 3
-            };
-
-            GameGrid.Add(frame, selectedColumn, selectedRow);
+            GameGrid.Add(label, selectedColumn, selectedRow);
+            
 
             //Set the store array value
             userInputs[selectedColumn] = currentInput;
 
             //Clear input
             currentInput = string.Empty;
-            userInput.Text = string.Empty;
 
             //Go to the next box
-            selectedColumn++;
+            if (selectedColumn < 4)
+            {
+                selectedColumn++;
+            }
+
+            //Testing
+            //resultChecked = true;
         }
 
-        //If its "delete", reset previous box
-        else if (validInput == true && inputType == 2)
-        {
-            //Clear Current Box
-            Entry entry = new Entry()
-            {
-                BackgroundColor = Colors.Black,
-                HeightRequest = 38,
-                WidthRequest = 38,
-                IsReadOnly = true,
-                Text = string.Empty
-            };
-
-            GameGrid.Add(entry, selectedColumn, selectedRow);
-
-            Frame frame = new Frame
-            {
-                BorderColor = Colors.LightGray,
-                BackgroundColor = Colors.Black,
-                Padding = 0,
-                HeightRequest = 40,
-                WidthRequest = 40,
-                CornerRadius = 3
-            };
-
-            GameGrid.Add(frame, selectedColumn, selectedRow);
-
-            //Go back a box
-            selectedColumn--;
-
-            //Clear that Box
-            GameGrid.Add(entry, selectedColumn, selectedRow);
-            GameGrid.Add(frame, selectedColumn, selectedRow);
-
-        }
-
-        //Testing
-        resultChecked = true;
-
-        //Reset the textbox
+        //Reset
         validInput = false;
-        userInput.Text = " ";
+        userInput.Text = "";
     }
 
     public void CheckResult(object sender, EventArgs e)
@@ -228,29 +181,27 @@ public partial class GamePage : ContentPage
                     //Set Result
                     attemptsGrid[selectedRow, selectedColumn] = 1;
 
-                    //Change Grid Entry
-                    Entry entry = new Entry()
+                    //Change Border
+                    Border border = new Border()
                     {
                         BackgroundColor = Colors.Green,
                         HeightRequest = 38,
-                        WidthRequest = 38,
-                        IsReadOnly = true,
-                        Text = userInputs[j]
+                        WidthRequest = 38
                     };
 
-                    GameGrid.Add(entry, selectedColumn, selectedRow);
+                    GameGrid.Add(border, selectedColumn, selectedRow);
 
-                    Frame frame = new Frame
+                    //Change Label
+                    Label label = new Label()
                     {
-                        BorderColor = Colors.LightGray,
-                        BackgroundColor = Colors.Green,
-                        Padding = 0,
-                        HeightRequest = 40,
-                        WidthRequest = 40,
-                        CornerRadius = 3,
+                        Text = userInputs[j],
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
+                        FontSize = 20,
+                        TextColor = Colors.White,
+                        //Change Font Family
                     };
-
-                    GameGrid.Add(frame, selectedColumn, selectedRow);
+                    GameGrid.Add(label, selectedColumn, selectedRow);
                 }
 
                 //If input is correct but in wrong place give it value of 2 and make it yellow
@@ -259,60 +210,53 @@ public partial class GamePage : ContentPage
                     //Set Result
                     attemptsGrid[selectedRow, selectedColumn] = 2;
 
-                    //Change Grid Entry
-                    Entry entry = new Entry()
+                    //Change Border
+                    Border border = new Border()
                     {
-                        BackgroundColor = Colors.Yellow,
+                        BackgroundColor = Colors.YellowGreen,
                         HeightRequest = 38,
-                        WidthRequest = 38,
-                        IsReadOnly = true,
-                        Text = userInputs[j]
+                        WidthRequest = 38
                     };
 
-                    GameGrid.Add(entry, selectedColumn, selectedRow);
+                    GameGrid.Add(border, selectedColumn, selectedRow);
 
-                    Frame frame = new Frame
+                    //Change Label
+                    Label label = new Label()
                     {
-                        BorderColor = Colors.LightGray,
-                        BackgroundColor = Colors.Yellow,
-                        Padding = 0,
-                        HeightRequest = 40,
-                        WidthRequest = 40,
-                        CornerRadius = 3,
+                        Text = userInputs[j],
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
+                        FontSize = 20,
+                        TextColor = Colors.White
+                        //Change Font Family
                     };
-
-                    GameGrid.Add(frame, selectedColumn, selectedRow);
+                    GameGrid.Add(label, selectedColumn, selectedRow);
                 }
 
                 //If input is incorrect give it a value of 3 and make it grey
                 else
                 {
-                    //Set Result
-                    attemptsGrid[selectedRow, selectedColumn] = 3;
-
-                    //Change Grid Entry
-                    Entry entry = new Entry()
+                    //Change Border
+                    Border border = new Border()
                     {
-                        BackgroundColor = Colors.Gray,
+                        BackgroundColor = Colors.Grey,
                         HeightRequest = 38,
-                        WidthRequest = 38,
-                        IsReadOnly = true,
-                        Text = userInputs[j]
+                        WidthRequest = 38
                     };
 
-                    GameGrid.Add(entry, selectedColumn, selectedRow);
+                    GameGrid.Add(border, selectedColumn, selectedRow);
 
-                    Frame frame = new Frame
+                    //Change Label
+                    Label label = new Label()
                     {
-                        BorderColor = Colors.LightGray,
-                        BackgroundColor = Colors.Gray,
-                        Padding = 0,
-                        HeightRequest = 40,
-                        WidthRequest = 40,
-                        CornerRadius = 3,
+                        Text = userInputs[j],
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
+                        FontSize = 20,
+                        TextColor = Colors.White
+                        //Change Font Family
                     };
-
-                    GameGrid.Add(frame, selectedColumn, selectedRow);
+                    GameGrid.Add(label, selectedColumn, selectedRow);
                 }
             }
 
@@ -327,6 +271,14 @@ public partial class GamePage : ContentPage
             else
             {
                 resultChecked = true;
+
+                
+                //Reset user inputs
+                for(j = 0; j < 5; j++)
+                {
+                    userInputs[j] = string.Empty;
+                }
+                
             }
         }
 
@@ -344,94 +296,81 @@ public partial class GamePage : ContentPage
             for (int j = 0; j < 6; j++)
             {
                 //Create the rows and columns of entries
-                Entry entry = new Entry()
+                Border border = new Border()
                 {
-                    BackgroundColor = Colors.Black,
+                    BackgroundColor = Colors.Gray,
                     HeightRequest = 38,
-                    WidthRequest = 38,
-                    IsReadOnly = true
+                    WidthRequest = 38
                 };
 
-                GameGrid.Add(entry, i, j);
-
-                //Create frames around the entries
-                Frame frame = new Frame
-                {
-                    BorderColor = Colors.LightGray,
-                    BackgroundColor = Colors.Black,
-                    Padding = 0,
-                    HeightRequest = 40,
-                    WidthRequest = 40,
-                    CornerRadius = 3
-                };
-
-                GameGrid.Add(frame, i, j);
+                GameGrid.Add(border, i, j);
             }
+        } 
+    }//End of MakeGrid
+
+    public void StartAlert()
+    {
+        string alertContent = "* You have 6 attempts to guess the right word\n* Click on the Text Box and type to enter Letters\n* Press Delete to remove an entry\n* Press enter to confirm your guess!";
+        DisplayAlert("Wordle: How to play", alertContent, "OK");
+    }
+    
+    public void InputValidation()
+    {
+        //False by default
+        validInput = false;
+
+        //Check to see if the entry is text
+        if (userInput.Text != string.Empty && userInput.Text != " " && userInput.Text != "" && userInputs[4] == string.Empty)
+        {
+            //ValidInput = true;
+            validationInput = userInput.Text;
+            validationInput = validationInput.ToUpper();
+
+            //DisplayAlert("INFO", validationInput, "CLOSE");
+            
+            
+            //Check to see if the entry is a letter
+            for (int j = 0; j < Letters.Length; j++)
+            {
+                if (validationInput == Letters[j])
+                {
+                    inputType = 1;
+                    validInput = true;
+                    break;
+                }
+            }
+            
         }
         
     }
 
-    public void InputValidation()
+    public void GameResult()
     {
-        //Default input result
-        inputType = 0;
+        SaveGame();
 
-        //Check to see if the entry is text
-        if (userInput.Text != string.Empty)
-        {
-            userInput.Text = userInput.Text.ToUpper();
-
-            //Check to see if the entry is a letter
-            for (int j = 0; j < Letters.Length; j++)
-            {
-                if (userInput.Text == Letters[i])
-                {
-                    inputType = 1;
-                    validInput = true;
-                }
-            }
-        }
-
-        //Check to see if the entry is Delete
-        else if(j == 15)
-        {
-            inputType = 2;
-            validInput = true;
-        }
-
-        //If invalid set to false
-        else
-        {
-            inputType = 0;
-            validInput = false;
-        }
-    }
-
-    public async void GameResult()
-    {
+        string gameDoneContent = "The word was: " + chosenWord + "\nGo to the results page to view your stats";
         if(gameWon == true) //Victory
         {
-
+            DisplayAlert("You won!", gameDoneContent, "OK");
+            userInput.IsVisible = false;
+            ResultsButton.IsVisible = true;
         }
 
         else if(gameWon == false) //Loss
         {
-
+            DisplayAlert("You lost!", gameDoneContent, "OK");
+            userInput.IsVisible = false;
+            ResultsButton.IsVisible = true;
         }
-
-        //Display Game Results with pop ups
-
-        //Save Results to TxT File
-        SaveGame();
     }
 
     public void SaveGame()
     {
         //Testing Different Values
+        /*
         PlayerName = "Melissa"; //Will be used to make file name, not saved in file
         chosenWord = "Fishy";
         gameWon = true;
-        Time = 59;
         Guesses = 5;
         saveFileData = "test";
 
@@ -448,7 +387,7 @@ public partial class GamePage : ContentPage
                 attemptsGrid[i, j] = randomResult;
             }
         }
-        //End of testing
+        //End of testing*/
 
         //Pathing
         string playerFile = PlayerName + ".txt";
@@ -459,38 +398,27 @@ public partial class GamePage : ContentPage
         //Game Word
         //Game Result
         //Guesses
-        //Timer
         //Array
 
-        saveFileData = "\n"; //Start new entry with new line
-
         //Game word
-        saveFileData += "\n";
-        saveFileData += chosenWord;
+        saveFileData = "Winning Word: " + chosenWord;
 
         //Win or loss
         saveFileData += "\n";
         if (gameWon == true)
         {
-            saveGameResult = "1"; //1 is win
-            saveFileData += saveGameResult;
+            saveFileData += "Game Result: Win";
         }
         else
         {
-            saveGameResult = "0"; //0 is loss
-            saveFileData += saveGameResult;
+            saveFileData += "Game Result: Loss";
         }
 
         //Guesses
+        Guesses = selectedRow + 1;
         saveFileData += "\n";
         saveGameGuesses = Guesses.ToString();
-        saveFileData += saveGameGuesses;
-
-        //Time
-        saveFileData += "\n";
-        saveGameTime = Time.ToString();
-        saveFileData += saveGameTime;
-
+        saveFileData += "Guesses: " + saveGameGuesses;
 
         //Array
         for (i = 0; i < 6; i++)
@@ -524,11 +452,8 @@ public partial class GamePage : ContentPage
         saveFileData += "\n";
         saveFileData += "\n";
 
-        //Testing saveFileData
-        DisplayAlert("Save Info", saveFileData, "CLOSE");
-
         //Save to file
-        File.WriteAllText(fullPath, saveFileData); //Causing Crashes
+        File.AppendAllText(fullPath, saveFileData);
     }
 
     public async void OpenResultsPage(object sender, EventArgs e)

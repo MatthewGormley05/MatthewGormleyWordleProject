@@ -7,21 +7,11 @@
              NavigationPage.HasNavigationBar="False">
     
     <VerticalStackLayout>
-        <Label Text="This is the Results Page" VerticalOptions="Center" HorizontalOptions="Center" />
-        <Button Text="Home Page" Clicked="OpenHomePage"/>
+        <Button Text="Home Page" Clicked="OpenHomePage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
 
-		<Label x:Name ="DisplayName" Text="{Binding PlayerName}"/>
+		<Label x:Name ="DisplayName" VerticalOptions="Center" HorizontalOptions="Center"/>
 		<Label Text=""/>
 
-		<Label Text="Game Result: Victory"/>
-		<Label Text="Time: N/A"/>
-		<Label Text="Word: N/A"/>
-		<Label Text="Guesses: "/>
-		<Label Text="Emoji Grid:"/>
-		<Label Text=""/>
-
-		<Grid x:Name="PlayerHistoryGrid" >
-			
-		</Grid>
+		<Label x:Name="PlayerHistoryView" VerticalOptions="Center" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
