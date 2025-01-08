@@ -16,7 +16,7 @@
               ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,*,*,*,*,*">
 		</Grid>
 
-		<Entry x:Name="userInput" Placeholder="Type Entry Here: " BackgroundColor="Gray" TextChanged="OnTextChanged" Completed="CheckResult" HeightRequest="25" WidthRequest="200"/>
+		<Entry x:Name="userInput" MaxLength="2" Placeholder="Type Entry Here: " BackgroundColor="Gray" TextChanged="OnTextChanged" Completed="CheckResult" HeightRequest="25" WidthRequest="200"/>
 
         <Button Text="Results Page" Clicked="OpenResultsPage" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200"/>
 	    <Label x:Name="WordTest" Text="test" BackgroundColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="200" />
